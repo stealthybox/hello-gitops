@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: infra
+  name: cert-manager
   namespace: flux-system
 spec:
-  path: ./infra
+  path: ./cert-manager
   wait: true
   prune: true
   interval: 10m0s
@@ -17,11 +17,27 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: infra
+  namespace: flux-system
+spec:
+  path: ./infra
+  wait: true
+  prune: true
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: cert-manager
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: apps
   namespace: flux-system
 spec:
   path: ./apps
-  serviceAccountName: apps
   wait: true
   prune: true
   interval: 10m0s

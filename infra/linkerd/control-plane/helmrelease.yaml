@@ -38,7 +38,7 @@ spec:
       externalCA: true
       issuer:
         scheme: kubernetes.io/tls
-    enablePodAntiAffinity: true
+    # enablePodAntiAffinity: true
     proxy:
       resources:
         cpu:
