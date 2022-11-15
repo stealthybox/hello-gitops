@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  chart:
+    spec:
+      chart: cert-manager
+      sourceRef:
+        kind: HelmRepository
+        name: cert-manager
+        namespace: flux-system
+  interval: 10m0s
+  values:
+    image:
+      repository: quay.io/jetstack/cert-manager-controller
+      tag: v1.10.0
+    installCRDs: true
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: false
+        namespace: prometheus
+        labels:
+          release: prometheus
+    podDnsPolicy: "None"
+    podDnsConfig:
+      nameservers:
+        - "1.1.1.1"
+        - "9.9.9.9"
