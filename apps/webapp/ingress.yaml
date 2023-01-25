@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: webapp
+  namespace: webapp
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: my-app
+          port: http
+          kind: TraefikService

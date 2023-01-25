@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  namespace: webapp
+  name: my-app
 spec:
   minReadySeconds: 3
   revisionHistoryLimit: 5
@@ -13,18 +12,17 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: frontend
+      app: my-app
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9797"
       labels:
-        app: frontend
+        app: my-app
     spec:
-      serviceAccountName: webapp
       containers:
-      - name: frontend
+      - name: my-app
         image: ghcr.io/stefanprodan/podinfo:6.2.2
         imagePullPolicy: IfNotPresent
         ports:
@@ -46,6 +44,8 @@ spec:
         env:
         - name: PODINFO_UI_COLOR
           value: "#34577c"
+        - name: PODINFO_UI_LOGO
+          value: https://avatars.githubusercontent.com/u/54452117
         livenessProbe:
           exec:
             command:
