@@ -39,7 +39,7 @@ spec:
     match:
       - headers:
           user-agent:
-            prefix: "Firefox"
+            suffix: "Firefox/105.0"
       - headers:
           x-user:
             exact: "insider"
